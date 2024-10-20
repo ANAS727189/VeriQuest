@@ -25,6 +25,7 @@ const StartInterview = ({ params }) => {
       .where(eq(AIinterview.mockId, params.interviewId));
     const jsonMockRes = JSON.parse(res[0].jsonMockResp);
     console.log("Parsed jsonMockResp:", jsonMockRes);
+    console.log("Raw json data:", res[0].jsonMockResp);
     
     if (res.length > 0) {
       setInterviewData(res[0]);
