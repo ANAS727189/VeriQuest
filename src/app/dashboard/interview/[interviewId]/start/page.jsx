@@ -32,6 +32,11 @@ const StartInterview = ({ params }) => {
     }
   };
 
+  const handleQuestionChange = (newIndex) => {
+    setActiveQuestionIndex(newIndex);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">Mock Interview</h1>
@@ -50,7 +55,7 @@ const StartInterview = ({ params }) => {
       <div className="flex justify-between mt-8">
         <Button
           variant="outline"
-          onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
+          onClick={() => handleQuestionChange(activeQuestionIndex - 1)}
           disabled={activeQuestionIndex === 0}
           className="flex items-center gap-2"
         >
@@ -60,14 +65,14 @@ const StartInterview = ({ params }) => {
         
         {activeQuestionIndex < mockInterviewQuestions?.length - 1 ? (
           <Button
-            onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
+            onClick={() => handleQuestionChange(activeQuestionIndex + 1)}
             className="flex items-center gap-2"
           >
             Next Question
             <ChevronRight className="h-4 w-4" />
           </Button>
         ) : (
-          <Link href="/interview-complete">
+          <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
             <Button className="flex items-center gap-2">
               End Interview
               <CheckCircle className="h-4 w-4" />
