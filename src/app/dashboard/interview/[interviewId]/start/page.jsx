@@ -58,7 +58,7 @@ const StartInterview = ({ params }) => {
           variant="outline"
           onClick={() => handleQuestionChange(activeQuestionIndex - 1)}
           disabled={activeQuestionIndex === 0}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 shadow-md"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous Question
@@ -67,14 +67,14 @@ const StartInterview = ({ params }) => {
         {activeQuestionIndex < mockInterviewQuestions?.length - 1 ? (
           <Button
             onClick={() => handleQuestionChange(activeQuestionIndex + 1)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 shadow-md"
           >
             Next Question
             <ChevronRight className="h-4 w-4" />
           </Button>
         ) : (
           <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 shadow-md">
               End Interview
               <CheckCircle className="h-4 w-4" />
             </Button>
