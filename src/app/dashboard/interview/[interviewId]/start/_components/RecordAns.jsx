@@ -64,49 +64,49 @@ const RecordAns = ({ mockInterviewQuestions, activeQuestionIndex, interviewData 
   const updateUserInDb = async () => {
     setLoading(true);
     const feedBackPrompt =
-      "Question: " +
-      mockInterviewQuestions[activeQuestionIndex]?.question +
-      ", User Answer: " +
-      userAnswer +
-      " depends on the question and user answer for the given interview question. Please give us a rating for the answer and feedback as an area of improvement (even if the answer is wrong, explain the correct answer)." +
-      " Provide feedback in just 5-6 lines in JSON Format with a rating field and feedback field.";
+    "Question: " +
+    mockInterviewQuestions[activeQuestionIndex]?.question +
+    ", User Answer: " +
+    userAnswer +
+    "depends on question and user answer for given interview question . Please give us rating for answer and feedback as area of improvement(even if answer is wrong tell it and explain correct answer), if any ." +
+    "Provide feedback in just 5-6 lines in JSON Format with rating field and feedback field";
 
-    const res = await chatSession.sendMessage(feedBackPrompt);
-    const mockJsonRes = res.response.text();
-    console.log(mockJsonRes);
+  const res = await chatSession.sendMessage(feedBackPrompt);
+  const mockJsonRes = res.response.text();
+  console.log(mockJsonRes);
 
-    const JsonFeedbackRes = JSON.parse(mockJsonRes);
+  const JsonFeedbackRes = JSON.parse(mockJsonRes);
 
-    const resp = await db.insert(userAnswer).values({
-      mockIdRef: interviewData?.mockId,
-      question: mockInterviewQuestions[activeQuestionIndex]?.question,
-      correctAns: mockInterviewQuestions[activeQuestionIndex]?.correctAns,
-      userAnswer: userAnswer,
-      feedback: JsonFeedbackRes.feedback,
-      rating: JsonFeedbackRes.rating,
-      userEmail: user?.primaryEmailAddress?.emailAddress,
-      createdAt: moment().format("DD-MM-YYYY"),
-    });
+  const resp = await db.insert(userAnswer).values({
+    mockIdRef: interviewData?.mockId,
+    question: mockInterviewQuestions[activeQuestionIndex]?.question,
+    correctAns: mockInterviewQuestions[activeQuestionIndex]?.correctAns,
+    userAnswer: userAnswer,
+    feedback: JsonFeedbackRes.feedback,
+    rating: JsonFeedbackRes.rating,
+    userEmail: user?.primaryEmailAddress?.emailAddress,
+    createdAt: moment().format("DD-MM-YYYY"),
+  });
 
-    if (resp) {
-      toast("Answer saved successfully", { type: "success" });
-      setUserAnswer("");
-      setResults([]);
-    }
-
-    setResults([]);
+  if (resp) {
+    toast("Answer saved successfully", { type: "success" });
     setUserAnswer("");
-    setLoading(false);
+    setResults([]);
+  }
+
+  setResults([]);
+  setUserAnswer("");
+  setLoading(false);
   };
 
   return (
-    <Card className="mt-8 border border-gray-300 rounded-lg shadow-lg">
+    <Card className="mt-8">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Record Your Answer</CardTitle>
+        <CardTitle>Record Your Answer</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center space-y-4">
-          <div className="relative w-full max-w-md aspect-video bg-gray-200 rounded-lg overflow-hidden shadow">
+          <div className="relative w-full max-w-md aspect-video bg-gray-100 rounded-lg overflow-hidden">
             <Webcam
               className="w-full h-full object-cover"
               onUserMediaError={handleUserMediaError}
@@ -118,7 +118,7 @@ const RecordAns = ({ mockInterviewQuestions, activeQuestionIndex, interviewData 
 
           <Button
             variant={isRecording ? "destructive" : "default"}
-            className="w-full max-w-xs shadow-md"
+            className="w-full max-w-xs"
             disabled={loading}
             onClick={toggleRecording}
           >
@@ -140,9 +140,9 @@ const RecordAns = ({ mockInterviewQuestions, activeQuestionIndex, interviewData 
           )}
 
           {userAnswer && (
-            <div className="w-full max-w-md mt-4 p-4 bg-gray-100 rounded-lg shadow-md">
+            <div className="w-full max-w-md mt-4">
               <h3 className="font-semibold mb-2">Your Answer:</h3>
-              <p className="text-sm text-gray-700">{userAnswer}</p>
+              <p className="bg-gray-100 p-3 rounded-md">{userAnswer}</p>
             </div>
           )}
         </div>
